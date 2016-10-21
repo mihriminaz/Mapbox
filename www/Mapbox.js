@@ -123,6 +123,18 @@ module.exports = {
     cordova.exec(successCallback, errorCallback, "Mapbox", "show", [id, options]);
   },
 
+  refreshMap: function (options, successCallback, errorCallback, id){
+    id = id || 0;
+
+    if(options.domElement) {
+      options.HTMLs = getDomElementsOverlay(options.domElement);
+      options.rect = getDivRect(options.domElement);
+      delete options.domElement; //Prevent circular reference error
+    }
+
+    cordova.exec(successCallback, errorCallback, "Mapbox", "refreshMap", [id, options])
+  },
+
   setDebug: function (debug, successCallback, errorCallback, id){
     id = id || 0;
     cordova.exec(successCallback, errorCallback, "Mapbox", "setDebug", [id, debug])
