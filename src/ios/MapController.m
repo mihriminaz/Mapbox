@@ -113,8 +113,7 @@
     } else if ([input isEqualToString:@"hybrid"]) {
         return [MGLStyle hybridStyleURL];
     } else {
-        // default (TODO allow an arbitrary url (see Android))
-        return [MGLStyle streetsStyleURL];
+        return [NSURL URLWithString: input];
     }
 }
 
