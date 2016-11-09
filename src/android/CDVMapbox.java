@@ -84,15 +84,19 @@ public class CDVMapbox extends CordovaPlugin implements ViewTreeObserver.OnScrol
          */
         MapsManager.init(this, _activity);
 
-     /*
-      * Init the plugin layer responsible to capture touch events.
-      * It permits to have Dom Elements on top of the map.
-      * If a touch event occurs in one of the embed rectangles and outside of a inner html element,
-      * the plugin layer considers that is a map action (drag, pan, etc.).
-      * If not, the user surely want to access the UIWebView.
-      */
-        pluginLayout = new PluginLayout(_webView.getView(), _activity);
-
+        _activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                /*
+                 * Init the plugin layer responsible to capture touch events.
+                 * It permits to have Dom Elements on top of the map.
+                 * If a touch event occurs in one of the embed rectangles and outside of a inner html element,
+                 * the plugin layer considers that is a map action (drag, pan, etc.).
+                 * If not, the user surely want to access the UIWebView.
+                 */
+                pluginLayout = new PluginLayout(_webView.getView(), _activity);
+            }
+        });
 
         /**
          * Create the maps container.
