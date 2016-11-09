@@ -1,5 +1,50 @@
 var exec = require("cordova/exec");
 
+var orientation = null;
+
+updateOrientation = function() {
+    orientation = window.orientation;
+
+    if(orientation === undefined) {
+        // No JavaScript orientation support. Work it out.
+        if(document.documentElement.clientWidth > document.documentElement.clientHeight) orientation = 'landscape';
+        else orientation = 'portrait';
+
+    }
+    else if(orientation === 0 || orientation === 180) orientation = 'portrait';
+    else orientation = 'landscape'; // Assumed default, most laptop and PC screens.
+
+};
+
+
+var viewportScale = undefined;
+
+// Get viewport width
+var viewportWidth = document.documentElement.clientWidth;
+
+// Abort. Screen width is greater than the viewport width (not fullscreen).
+if(screen.width > viewportWidth) {
+    console.log('Aborted viewport scale measurement. Screen width > viewport width');
+
+}
+
+// Get the orientation corrected screen width
+updateOrientation();
+var screenWidth = screen.width;
+
+if(orientation === 'portrait') {
+    // Take smaller of the two dimensions
+    if(screen.width > screen.height) screenWidth = screen.height;
+
+}
+else {
+    // Take larger of the two dimensions
+    if(screen.width < screen.height) screenWidth = screen.height;
+
+}
+
+// Calculate viewport scale
+viewportScale = screenWidth / window.innerWidth;
 
 function getAbsoluteMargins(mapDiv) {
 
@@ -8,10 +53,10 @@ function getAbsoluteMargins(mapDiv) {
   var rect = mapDiv.getBoundingClientRect();
 
   return {
-    'top': pageRect.top + rect.top,
-    'right': (pageRect.left + pageRect.width) - rect.right,
-    'bottom': (pageRect.top + pageRect.height) - rect.bottom,
-    'left': pageRect.left + rect.left
+    'top': (pageRect.top + rect.top) * viewportScale,
+    'right':  ((pageRect.left + pageRect.width) - rect.right) * viewportScale,
+    'bottom': ((pageRect.top + pageRect.height) - rect.bottom) * viewportScale,
+    'left': (pageRect.left + rect.left) * viewportScale
   };
 }
 
@@ -85,10 +130,10 @@ function getDivRect(div) {
 
   var rect = div.getBoundingClientRect();
   return {
-    'left': rect.left + pageRect.left,
-    'top': rect.top + pageRect.top,
-    'width': rect.width,
-    'height': rect.height
+    'left': (rect.left + pageRect.left) * viewportScale,
+    'top': (rect.top + pageRect.top) * viewportScale,
+    'width': (rect.width) * viewportScale,
+    'height': (rect.height) * viewportScale
   };
 }
 
