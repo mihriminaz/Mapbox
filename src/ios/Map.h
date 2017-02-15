@@ -36,6 +36,7 @@
 - (void) addGeoJSON:(CDVInvokedUrlCommand *)command;
 - (void) addMarkers:(CDVInvokedUrlCommand *)command;
 - (void) addMarkerCallback:(CDVInvokedUrlCommand *)command;
+- (void) removeMarker:(CDVInvokedUrlCommand*)comman;
 
 - (void)convertCoordinates:(CDVInvokedUrlCommand *)command;
 - (void) convertPoint:(CDVInvokedUrlCommand *)command;

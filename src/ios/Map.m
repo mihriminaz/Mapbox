@@ -189,14 +189,17 @@
 }
 
 - (void)onRegionWillChange:(CDVInvokedUrlCommand *)command {
+    NSLog(@"onRegionWillChange Map");
     _mapCtrl.regionWillChangeAnimatedCallbackId = command.callbackId;
 }
 
 - (void)onRegionIsChanging:(CDVInvokedUrlCommand *)command {
+    NSLog(@"onRegionIsChanging Map");
     _mapCtrl.regionIsChangingCallbackId = command.callbackId;
 }
 
 - (void)onRegionDidChange:(CDVInvokedUrlCommand *)command {
+    NSLog(@"onRegionDidChange Map");
     _mapCtrl.regionDidChangeAnimatedCallbackId = command.callbackId;
 }
 
@@ -278,6 +281,12 @@
     [_cdvMapbox.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
+- (void) removeMarker:(CDVInvokedUrlCommand*)command {
+    NSString *annotationId = command.arguments[1];
+    if (annotationId != nil) [_mapCtrl removeAnnotationOnTheMap:annotationId];
+    CDVPluginResult * pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"zefzefz"];
+    [_cdvMapbox.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+}
 
 - (void) addMarkerCallback:(CDVInvokedUrlCommand*)command {
     _mapCtrl.markerCallbackId = command.callbackId;
