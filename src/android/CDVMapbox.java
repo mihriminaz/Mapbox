@@ -291,12 +291,16 @@ public class CDVMapbox extends CordovaPlugin implements ViewTreeObserver.OnScrol
                     @Override
                     public void run() {
                         LatLng latLng = mapCtrl.getCenter();
-                        callbackContext.success('{' +
-                                "\"center\": {" +
-                                "\"lat\": " + latLng.getLatitude() + ',' +
-                                "\"lng\": " + latLng.getLongitude() +
-                                '}'
-                        );
+                        JSONObject json = null;
+                        try {
+                            json = new JSONObject()
+                                    .put("lat", latLng.getLatitude())
+                                    .put("lng", latLng.getLongitude());
+                            callbackContext.success(json);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            callbackContext.error(e.getMessage());
+                        }
                     }
                 });
 
@@ -309,7 +313,7 @@ public class CDVMapbox extends CordovaPlugin implements ViewTreeObserver.OnScrol
                                 throw new JSONException(action + "need a [long, lat] coordinates");
                             }
                             JSONArray center = args.getJSONArray(1);
-                            mapCtrl.setCenter(center.getDouble(0), center.getDouble(0));
+                            mapCtrl.setCenter(center.getDouble(0), center.getDouble(1));
                             callbackContext.success();
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -358,7 +362,8 @@ public class CDVMapbox extends CordovaPlugin implements ViewTreeObserver.OnScrol
                     @Override
                     public void run() {
                         try {
-                            callbackContext.success(new JSONObject("{\"pitch\":" + mapCtrl.getTilt() + '}'));
+                            JSONObject json = new JSONObject().put("pitch", mapCtrl.getTilt());
+                            callbackContext.success(json);
                         } catch (JSONException e) {
                             e.printStackTrace();
                             callbackContext.error(e.getMessage());
