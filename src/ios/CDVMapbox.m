@@ -219,6 +219,12 @@
   }];
 }
 
+- (void) updateMarker:(CDVInvokedUrlCommand *)command {
+  [self exec:command withMethod:^(Map *aMap, CDVInvokedUrlCommand *aCommand) {
+    [aMap updateMarker:aCommand];
+  }];
+}
+
 - (void)exec:(CDVInvokedUrlCommand *)command withMethod:(void (^)(Map*, CDVInvokedUrlCommand*))execute_map_method {
   Map *map = [_mapsManager getMap:[command.arguments[0] intValue]];
   execute_map_method(map, command);

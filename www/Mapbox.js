@@ -240,6 +240,11 @@ module.exports = {
     cordova.exec(successCallback, errorCallback, "Mapbox", "addMarkers", [id, sourceId, source]);
   },
 
+  updateSource: function (sourceId, source, successCallback, errorCallback, id) {
+    id = id || 0;
+    cordova.exec(successCallback, errorCallback, "Mapbox", "updateMarker", [id, sourceId, source]);
+  },
+
   removeMarker: function (sourceId, markerId, successCallback, errorCallback, id) {
     id = id || 0;
     cordova.exec(successCallback, errorCallback, "Mapbox", "removeMarker", [id, sourceId, markerId]);

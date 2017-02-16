@@ -166,6 +166,22 @@
     }
 }
 
+- (void)updateMarkerOnTheMap:(NSDictionary *)marker {
+  for (int i = 0; i < _existingMarkersArray.count; i++) {
+    NSDictionary* existingMarker = _existingMarkersArray[i];
+    NSString *idOfExistingAnnotation = [existingMarker valueForKey:@"annotationIdentifier"];
+    NSString *idOfUpdatingAnnotation = [marker valueForKey:@"idXXXX"];
+    MGLPointAnnotation *annotation = [existingMarker valueForKey:@"annotation"];
+
+    if ((idOfExistingAnnotation == idOfUpdatingAnnotation) && (idOfExistingAnnotation != nil) && (annotation != nil)) {
+      [_cdvMapbox.commandDelegate runInBackground:^{
+        [self.mapView removeAnnotation:annotation];
+        [self putMarkersOnTheMap:[[NSArray alloc] initWithObjects:marker, nil]];
+      }];
+    }
+  }
+}
+
 
 // this method is invoked every time an annotation is clicked
 - (BOOL)mapView:(MGLMapView *)mapView annotationCanShowCallout:(id <MGLAnnotation>)annotation {
