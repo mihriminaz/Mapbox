@@ -146,7 +146,14 @@
             NSMutableDictionary *pointDict = [[NSMutableDictionary alloc] init];
             [pointDict setObject:point forKey:@"annotation"];
             [pointDict setValue:[marker valueForKey:@"idXXXX"] forKey:@"annotationIdentifier"];
-            [_existingMarkersArray addObject: pointDict];
+
+          	NSString *imageName = [marker valueForKey:@"image"];
+          	if (imageName != nil && imageName.length > 0) {
+           		 MGLAnnotationImage *image = [MGLAnnotationImage annotationImageWithImage:[UIImage imageNamed:image] reuseIdentifier:imageName];
+           		 MGLPointAnnotation *point = [[MGLPointAnnotation alloc] init];
+          	}
+
+          	[_existingMarkersArray addObject: pointDict];
             [self.mapView addAnnotation:point];
         }
         NSLog(@"_existingMarkersArray %@", _existingMarkersArray);
@@ -182,6 +189,10 @@
   }
 }
 
+- (nullable MGLAnnotationImage *)mapView:(MGLMapView *)mapView imageForAnnotation:(id <MGLAnnotation>)annotation {
+		MGLAnnotationImage *anAnnotationImage = [MGLAnnotationImage annotationImageWithImage:[UIImage imageNamed:@"pin_unu"] reuseIdentifier:@"pin_unu"];
+  return anAnnotationImage;
+}
 
 // this method is invoked every time an annotation is clicked
 - (BOOL)mapView:(MGLMapView *)mapView annotationCanShowCallout:(id <MGLAnnotation>)annotation {

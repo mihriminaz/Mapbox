@@ -124,6 +124,7 @@
     <header-file src="src/ios/libs/Mapbox.framework/Headers/MGLTilePyramidOfflineRegion.h" />
     <header-file src="src/ios/libs/Mapbox.framework/Headers/MGLTypes.h" />
     <header-file src="src/ios/libs/Mapbox.framework/Headers/MGLUserLocation.h" />
+      <resource-file src="src/ios/Media/Images.xcassets"/>
 
     <!-- Downloaded iOS SDK version 3.2.0 from https://github.com/mapbox/mapbox-gl-native/releases -->
     <framework src="src/ios/libs/Mapbox.framework" custom="true" />
