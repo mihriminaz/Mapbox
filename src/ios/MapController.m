@@ -16,7 +16,7 @@
     NSDictionary* _initArgs;
     CDVMapbox *_cdvMapbox;
     CGRect _mapFrame;
-    NSMutableArray* _existingMarkersArray;
+    NSMutableArray* _existingAnnotationsArray;
 }
 @end
 
@@ -27,7 +27,7 @@
     _initArgs = [[NSDictionary alloc] initWithDictionary:args];
     _cdvMapbox = plugin;
     _mapFrame = mapFrame;
-    _existingMarkersArray = [[NSMutableArray alloc] init];
+    _existingAnnotationsArray = [[NSMutableArray alloc] init];
     self.webView = _cdvMapbox.webView;
 
     return self;
@@ -168,8 +168,9 @@
 - (void)updateMarkerOnTheMap:(NSDictionary *)marker {
   for (int i = 0; i < _existingAnnotationsArray.count; i++) {
     UnuAnnotation *existingAnnotation = _existingAnnotationsArray[i];
+    NSString *annotationIdentifier = [marker valueForKey:@"annotationIdentifier"];
 
-    if (existingAnnotation.annotationIdentifier == existingAnnotation.annotationIdentifier) {
+    if (existingAnnotation.annotationIdentifier == annotationIdentifier) {
       [_cdvMapbox.commandDelegate runInBackground:^{
         [self.mapView removeAnnotation:existingAnnotation];
         [self putMarkersOnTheMap:[[NSArray alloc] initWithObjects:marker, nil]];

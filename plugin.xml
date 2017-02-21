@@ -100,6 +100,8 @@
     <source-file src="src/ios/PluginLayout.m" />
     <source-file src="src/ios/PluginScrollLayout.m" />
     <header-file src="src/ios/PluginScrollLayout.h" />
+    <header-file src="src/ios/UnuAnnotation.h" />
+    <source-file src="src/ios/UnuAnnotation.m" />
 
     <header-file src="src/ios/libs/Mapbox.framework/Headers/Mapbox.h" />
     <header-file src="src/ios/libs/Mapbox.framework/Headers/MGLAccountManager.h" />

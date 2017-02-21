@@ -5,6 +5,7 @@
 #import "PluginScrollLayout.h"
 #import "MapsManager.h"
 #import "MGLAccountManager.h"
+#import "UnuAnnotation.h"
 
 @interface CDVMapbox : CDVPlugin<UIScrollViewDelegate>;
 
